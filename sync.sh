@@ -9,6 +9,7 @@ cp $src/blox/resume-awards/block.html $dest/layouts/partials/hbx/blocks/resume-a
 cp $src/blox/resume-experience/block.html $dest/layouts/partials/hbx/blocks/resume-experience/
 
 cp $src/layouts/single.html $dest/layouts/
+cp $src/layouts/_partials/page_links.html $dest/layouts/partials/
 cp $src/layouts/_partials/site_footer.html $dest/layouts/partials/
 cp $src/layouts/_partials/views/card.html $dest/layouts/partials/views/
 cp $src/layouts/_partials/components/headers/navbar.html $dest/layouts/partials/components/headers/

@@ -1,3 +1,9 @@
+{{/*
+  Personal modifications:
+  1. Do not special-case bibtex resource to copy the contents. Just download
+  the file.
+*/}}
+
 {{ $is_list := .is_list }}
 {{ $page := .page }}
 
@@ -28,7 +34,7 @@
   "btn_registration" "Registration"
   "btn_demo" "Demo"
   "btn_cite" "Cite"
-}} 
+}}
 
 {{ range $built }}
   {{ if in .contexts $ctx }}
@@ -39,9 +45,9 @@
     {{ with .rel }}{{ $rel = . }}{{ end }}
     {{ if not $scheme }}
       {{ with ($page.Resources.GetMatch $url) }}
-        {{ $url = .RelPermalink }}
+	{{ $url = .RelPermalink }}
       {{ else }}
-        {{ $url = $url | relURL }}
+	{{ $url = $url | relURL }}
       {{ end }}
     {{ else if in (slice "http" "https") $scheme }}
       {{ $target = "target=\"_blank\"" }}
@@ -52,23 +58,25 @@
     {{ $label := .label }}
     {{ with .labelKey }}
       {{ if not $label }}
-        {{ $label = (i18n .) | default (index $fallbackByKey .) | default "Link" }}
+	{{ $label = (i18n .) | default (index $fallbackByKey .) | default "Link" }}
       {{ end }}
     {{ end }}
     {{ if not $label }}
       {{ $label = "Link" }}
     {{ end }}
 
+{{/*
     {{ if eq .type "bibtex" }}
       <button class="{{ $classes }} js-cite-clipboard cursor-pointer" type="button" data-filename="{{ $url }}">
-        {{ partial "functions/get_icon" (dict "name" (.icon | default "hero/document-duplicate") "attributes" "style=\"height: 1em\" class='inline-block'") }}
-        <span>{{ $label }}</span>
+	{{ partial "functions/get_icon" (dict "name" (.icon | default "hero/document-duplicate") "attributes" "style=\"height: 1em\" class='inline-block'") }}
+	<span>{{ $label }}</span>
       </button>
     {{ else }}
+*/}}
       <a class="{{ $classes }}" href="{{ $url | safeURL }}" {{ $target | safeHTMLAttr }} {{ with $rel }}rel="{{ delimit . " " }}"{{ end }}>
-        {{ partial "functions/get_icon" (dict "name" (.icon | default "hero/link") "attributes" "style=\"height: 1em\" class='inline-block'") }}
-        {{ $label }}
+	{{ partial "functions/get_icon" (dict "name" (.icon | default "hero/link") "attributes" "style=\"height: 1em\" class='inline-block'") }}
+	{{ $label }}
       </a>
-    {{ end }}
+{{/*    {{ end }} */}}
   {{ end }}
 {{ end }}
