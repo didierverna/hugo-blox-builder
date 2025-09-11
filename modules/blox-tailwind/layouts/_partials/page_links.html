@@ -65,18 +65,9 @@
       {{ $label = "Link" }}
     {{ end }}
 
-{{/*
-    {{ if eq .type "bibtex" }}
-      <button class="{{ $classes }} js-cite-clipboard cursor-pointer" type="button" data-filename="{{ $url }}">
-	{{ partial "functions/get_icon" (dict "name" (.icon | default "hero/document-duplicate") "attributes" "style=\"height: 1em\" class='inline-block'") }}
-	<span>{{ $label }}</span>
-      </button>
-    {{ else }}
-*/}}
       <a class="{{ $classes }}" href="{{ $url | safeURL }}" {{ $target | safeHTMLAttr }} {{ with $rel }}rel="{{ delimit . " " }}"{{ end }}>
 	{{ partial "functions/get_icon" (dict "name" (.icon | default "hero/link") "attributes" "style=\"height: 1em\" class='inline-block'") }}
 	{{ $label }}
       </a>
-{{/*    {{ end }} */}}
   {{ end }}
 {{ end }}
