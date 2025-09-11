@@ -1,7 +1,3 @@
-{{/*
-  Personal modifications:
-  1. Don't force an icon pack on users.
-*/}}
 {{/* Hugo Blox: Awards */}}
 {{/* Documentation: https://hugoblox.com/blocks/ */}}
 {{/* License: https://github.com/HugoBlox/hugo-blox-builder/blob/main/LICENSE.md */}}
@@ -33,7 +29,6 @@
   {{- $icon := .icon }}
   {{ with $icon }}
   <div class="w-7 h-7 text-gray-500 dark:text-gray-400 mb-3">
-    {{/* Remove "pack" "brands" from the call below -- didier */}}
     {{ partial "functions/get_icon" (dict "name" $icon "attributes" "style=\"height: 100%;\"")  }}
   </div>
   {{ end}}
