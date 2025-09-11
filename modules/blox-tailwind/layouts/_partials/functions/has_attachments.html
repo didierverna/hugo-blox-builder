@@ -1,23 +1,36 @@
+{{/*
+  Personal modifications:
+  1. Take into account my additional local resources.
+*/}}
 {{/* Return true if the page has attachments or link buttons to display. */}}
 
-{{ $page := . }}
-
 {{ $pdf_link := false }}
+{{ $cite_link := false }}
+{{ $slides_link := false }}
+{{ $dataset_link := false }}
+
+{{ $page := . }}
 {{/* Prevent Hugo warning ".File.ContentBaseName on zero object." for content not backed by a Markdown file, */}}
 {{/* such as auto-generated taxonomy pages, and sections without an explicit index file. */}}
 {{/* The file check is required when called from `_default/list.html`, the fallback list view for the above cases. */}}
 {{ with $page.File }}
-  {{ $slug := $page.File.ContentBaseName }}
+  {{ $slug := .ContentBaseName }}
   {{ $resource := $page.Resources.GetMatch (printf "%s.pdf" $slug) }}
   {{ with $resource }}
     {{ $pdf_link = true }}
   {{ end }}
+  {{ $resource := $page.Resources.GetMatch (printf "%s.bib" $slug) }}
+  {{ if $resource | or $page.Params.cite }}
+    {{ $cite_link = true }}
+  {{ end }}
+  {{ $resource := $page.Resources.GetMatch (printf "%s.slides.pdf" $slug) }}
+  {{ if $resource | or $page.Params.slides }}
+    {{ $slides_link = true }}
+  {{ end }}
+  {{ $resource := $page.Resources.GetMatch (printf "%s.dataset.tar.gz" $slug) }}
+  {{ if $resource | or $page.Params.dataset }}
+    {{ $dataset_link = true }}
+  {{ end }}
 {{ end }}
 
-{{ $cite_link := false }}
-{{ $resource := $page.Resources.GetMatch "cite.bib" }}
-{{ with $resource }}
-  {{ $cite_link = true }}
-{{ end }}
-
-{{ return ($cite_link | or $pdf_link | or .Params.url_preprint | or .Params.url_pdf | or .Params.url_slides | or .Params.url_video | or .Params.url_source | or .Params.url_code | or .Params.url_dataset | or .Params.url_poster | or .Params.url_project | or .Params.doi | or .Params.links | or .Params.projects | or .Params.slides) }}
+{{ return ($slides_link | or $dataset_link | or $cite_link | or $pdf_link | or .Params.url_preprint | or .Params.url_pdf | or .Params.url_slides | or .Params.url_video | or .Params.url_source | or .Params.url_code | or .Params.url_dataset | or .Params.url_poster | or .Params.url_project | or .Params.doi | or .Params.links | or .Params.projects | or .Params.slides) }}
