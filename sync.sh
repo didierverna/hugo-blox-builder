@@ -6,6 +6,7 @@ dest=../didierverna.net
 
 cp $src/blox/resume-biography-3/block.html $dest/layouts/partials/hbx/blocks/resume-biography-3/
 cp $src/blox/resume-experience/block.html $dest/layouts/partials/hbx/blocks/resume-experience/
+cp $src/blox/collection/block.html $dest/layouts/partials/hbx/blocks/collection/
 
 cp $src/layouts/single.html $dest/layouts/
 cp -a $src/layouts/publication $dest/layouts/
