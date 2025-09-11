@@ -16,3 +16,4 @@ cp $src/layouts/_partials/site_footer.html $dest/layouts/partials/
 cp $src/layouts/_partials/views/card.html $dest/layouts/partials/views/
 cp $src/layouts/_partials/components/headers/navbar.html $dest/layouts/partials/components/headers/
 cp $src/layouts/_partials/functions/get_event_dates.html $dest/layouts/partials/functions/
+cp $src/layouts/_partials/functions/build_links.html $dest/layouts/partials/functions/

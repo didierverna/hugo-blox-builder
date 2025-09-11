@@ -1,4 +1,10 @@
 {{/*
+  Personal modifications:
+  1. use the directory name for many local resources: pdf (as before), but
+  also bib (instead of cite.bib), slides (.slides.pdf).
+*/}}
+
+{{/*
   Hugo Blox Page Link Builder
   Build a normalized list of page links from:
   - Author-provided front matter `links` (array order respected)
@@ -25,6 +31,8 @@
 {{ $page := .page }}
 {{ $is_list := .is_list }}
 
+{{ $dir := $page.File.ContentBaseName }}
+
 {{ $types := site.Data.link_types.types }}
 {{ $derived := site.Data.link_types.derived }}
 
@@ -41,11 +49,11 @@
     {{/* Optional provider+id derivation for common platforms */}}
     {{ if and (not $url) .id }}
       {{ if eq $type "doi" }}
-        {{ $url = replace (index (index $derived "doi") "url_template") "{id}" (printf "%v" .id) }}
+	{{ $url = replace (index (index $derived "doi") "url_template") "{id}" (printf "%v" .id) }}
       {{ else if and (eq $type "preprint") (eq .provider "arxiv") }}
-        {{ $url = replace (index (index $derived "arxiv") "url_template") "{id}" (printf "%v" .id) }}
+	{{ $url = replace (index (index $derived "arxiv") "url_template") "{id}" (printf "%v" .id) }}
       {{ else if and (eq $type "preprint") (eq .provider "openreview") }}
-        {{ $url = replace (index (index $derived "openreview") "url_template") "{id}" (printf "%v" .id) }}
+	{{ $url = replace (index (index $derived "openreview") "url_template") "{id}" (printf "%v" .id) }}
       {{ end }}
     {{ end }}
     {{ $typeF := $type }}
@@ -54,14 +62,14 @@
     {{ if not ($seen.Get (printf "set.%s" $keyF)) }}
       {{ $seen.SetInMap "set" $keyF true }}
       {{ $links = $links | append (dict
-          "type" $typeF
-          "url" $urlF
-          "icon" (.icon | default (index (index $types $typeF) "icon") | default "hero/link")
-          "labelKey" (index (index $types $typeF) "label_i18n")
-          "label" (.label | default .name)
-          "contexts" (.contexts | default (slice "list" "page"))
-          "rel" .rel
-        ) }}
+	  "type" $typeF
+	  "url" $urlF
+	  "icon" (.icon | default (index (index $types $typeF) "icon") | default "hero/link")
+	  "labelKey" (index (index $types $typeF) "label_i18n")
+	  "label" (.label | default .name)
+	  "contexts" (.contexts | default (slice "list" "page"))
+	  "rel" .rel
+	) }}
     {{ end }}
   {{ end }}
 {{ end }}
@@ -74,14 +82,14 @@
       {{ $urlF := .RelPermalink }}
       {{ $keyF := printf "%s::%s" $typeF $urlF }}
       {{ if not ($seen.Get (printf "set.%s" $keyF)) }}
-        {{ $seen.SetInMap "set" $keyF true }}
-        {{ $links = $links | append (dict
-            "type" $typeF
-            "url" $urlF
-            "icon" (index (index $types $typeF) "icon")
-            "labelKey" (index (index $types $typeF) "label_i18n")
-            "contexts" (slice "list" "page")
-          ) }}
+	{{ $seen.SetInMap "set" $keyF true }}
+	{{ $links = $links | append (dict
+	    "type" $typeF
+	    "url" $urlF
+	    "icon" (index (index $types $typeF) "icon")
+	    "labelKey" (index (index $types $typeF) "label_i18n")
+	    "contexts" (slice "list" "page")
+	  ) }}
       {{ end }}
     {{ end }}
   {{ end }}
@@ -96,48 +104,76 @@
     {{ if not ($seen.Get (printf "set.%s" $keyF)) }}
       {{ $seen.SetInMap "set" $keyF true }}
       {{ $links = $links | append (dict
-          "type" $typeF
-          "url" $urlF
-          "icon" (index (index $types $typeF) "icon")
-          "labelKey" (index (index $types $typeF) "label_i18n")
-          "contexts" (slice "list" "page")
-        ) }}
+	  "type" $typeF
+	  "url" $urlF
+	  "icon" (index (index $types $typeF) "icon")
+	  "labelKey" (index (index $types $typeF) "label_i18n")
+	  "contexts" (slice "list" "page")
+	) }}
     {{ end }}
   {{ else }}
     {{ warnf "`slides` relation could not resolve to a page for %s" $page.File.Path }}
   {{ end }}
 {{ end }}
 
-{{/* 3) Auto-detected resources (local PDF by content basename, cite.bib) */}}
-{{ with $page.File.ContentBaseName }}
-  {{ with ($page.Resources.GetMatch (printf "%s.pdf" .)) }}
-    {{ $typeF := "pdf" }}
-    {{ $urlF := .RelPermalink }}
-    {{ $keyF := printf "%s::%s" $typeF $urlF }}
-    {{ if not ($seen.Get (printf "set.%s" $keyF)) }}
-      {{ $seen.SetInMap "set" $keyF true }}
-      {{ $links = $links | append (dict
-          "type" $typeF
-          "url" $urlF
-          "icon" (index (index $types $typeF) "icon")
-          "labelKey" (index (index $types $typeF) "label_i18n")
-          "contexts" (slice "list" "page")
-        ) }}
-    {{ end }}
+{{/* 3) Auto-detected resources (PDF, slides, dataset) by content basename */}}
+{{ with ($page.Resources.GetMatch (printf "%s.pdf" $dir)) }}
+  {{ $typeF := "pdf" }}
+  {{ $urlF := .RelPermalink }}
+  {{ $keyF := printf "%s::%s" $typeF $urlF }}
+  {{ if not ($seen.Get (printf "set.%s" $keyF)) }}
+    {{ $seen.SetInMap "set" $keyF true }}
+    {{ $links = $links | append (dict
+	 "type" $typeF
+	 "url" $urlF
+	 "icon" (index (index $types $typeF) "icon")
+	 "labelKey" (index (index $types $typeF) "label_i18n")
+	 "contexts" (slice "list" "page")
+	) }}
   {{ end }}
 {{ end }}
-{{ with ($page.Resources.GetMatch "cite.bib") }}
+{{ with ($page.Resources.GetMatch (printf "%s.bib" $dir)) }}
   {{ $typeF := "bibtex" }}
   {{ $urlF := .RelPermalink }}
   {{ $keyF := printf "%s::%s" $typeF $urlF }}
   {{ if not ($seen.Get (printf "set.%s" $keyF)) }}
     {{ $seen.SetInMap "set" $keyF true }}
     {{ $links = $links | append (dict
-        "type" $typeF
-        "url" $urlF
-        "icon" (index (index $types $typeF) "icon")
-        "labelKey" (index (index $types $typeF) "label_i18n")
-        "contexts" (slice "list" "page")
+	"type" $typeF
+	"url" $urlF
+	"icon" (index (index $types $typeF) "icon")
+	"labelKey" (index (index $types $typeF) "label_i18n")
+	"contexts" (slice "list" "page")
+      ) }}
+  {{ end }}
+{{ end }}
+{{ with ($page.Resources.GetMatch (printf "%s.slides.pdf" $dir)) }}
+  {{ $typeF := "slides" }}
+  {{ $urlF := .RelPermalink }}
+  {{ $keyF := printf "%s::%s" $typeF $urlF }}
+  {{ if not ($seen.Get (printf "set.%s" $keyF)) }}
+    {{ $seen.SetInMap "set" $keyF true }}
+    {{ $links = $links | append (dict
+	"type" $typeF
+	"url" $urlF
+	"icon" (index (index $types $typeF) "icon")
+	"labelKey" (index (index $types $typeF) "label_i18n")
+	"contexts" (slice "list" "page")
+      ) }}
+  {{ end }}
+{{ end }}
+{{ with ($page.Resources.GetMatch (printf "%s.dataset.tar.gz" $dir)) }}
+  {{ $typeF := "dataset" }}
+  {{ $urlF := .RelPermalink }}
+  {{ $keyF := printf "%s::%s" $typeF $urlF }}
+  {{ if not ($seen.Get (printf "set.%s" $keyF)) }}
+    {{ $seen.SetInMap "set" $keyF true }}
+    {{ $links = $links | append (dict
+	"type" $typeF
+	"url" $urlF
+	"icon" (index (index $types $typeF) "icon")
+	"labelKey" (index (index $types $typeF) "label_i18n")
+	"contexts" (slice "list" "page")
       ) }}
   {{ end }}
 {{ end }}
@@ -147,20 +183,20 @@
   {{ with .ids }}
     {{ range $key, $val := . }}
       {{ with (index $derived $key) }}
-        {{ $der := . }}
-        {{ $typeF := index $der "type" }}
-        {{ $urlF := replace (index $der "url_template") "{id}" (printf "%v" $val) }}
-        {{ $keyF := printf "%s::%s" $typeF $urlF }}
-        {{ if not ($seen.Get (printf "set.%s" $keyF)) }}
-          {{ $seen.SetInMap "set" $keyF true }}
-          {{ $links = $links | append (dict
-              "type" $typeF
-              "url" $urlF
-              "icon" (index $der "icon")
-              "labelKey" (index $der "label_i18n")
-              "contexts" (slice "list" "page")
-            ) }}
-        {{ end }}
+	{{ $der := . }}
+	{{ $typeF := index $der "type" }}
+	{{ $urlF := replace (index $der "url_template") "{id}" (printf "%v" $val) }}
+	{{ $keyF := printf "%s::%s" $typeF $urlF }}
+	{{ if not ($seen.Get (printf "set.%s" $keyF)) }}
+	  {{ $seen.SetInMap "set" $keyF true }}
+	  {{ $links = $links | append (dict
+	      "type" $typeF
+	      "url" $urlF
+	      "icon" (index $der "icon")
+	      "labelKey" (index $der "label_i18n")
+	      "contexts" (slice "list" "page")
+	    ) }}
+	{{ end }}
       {{ end }}
     {{ end }}
   {{ end }}
@@ -176,11 +212,11 @@
   {{ if not ($seen.Get (printf "set.%s" $keyF)) }}
     {{ $seen.SetInMap "set" $keyF true }}
     {{ $links = $links | append (dict
-        "type" $typeF
-        "url" $urlF
-        "icon" (index (index $types $typeF) "icon")
-        "labelKey" (index (index $types $typeF) "label_i18n")
-        "contexts" (slice "list" "page")
+	"type" $typeF
+	"url" $urlF
+	"icon" (index (index $types $typeF) "icon")
+	"labelKey" (index (index $types $typeF) "label_i18n")
+	"contexts" (slice "list" "page")
       ) }}
   {{ end }}
 {{ end }}
@@ -195,12 +231,12 @@
     {{ if not ($seen.Get (printf "set.%s" $keyF)) }}
       {{ $seen.SetInMap "set" $keyF true }}
       {{ $links = $links | append (dict
-          "type" $typeF
-          "url" $urlF
-          "icon" (index $der "icon")
-          "labelKey" (index $der "label_i18n")
-          "contexts" (slice "list" "page")
-        ) }}
+	  "type" $typeF
+	  "url" $urlF
+	  "icon" (index $der "icon")
+	  "labelKey" (index $der "label_i18n")
+	  "contexts" (slice "list" "page")
+	) }}
     {{ end }}
   {{ else }}
     {{ $typeF := "doi" }}
@@ -209,12 +245,12 @@
     {{ if not ($seen.Get (printf "set.%s" $keyF)) }}
       {{ $seen.SetInMap "set" $keyF true }}
       {{ $links = $links | append (dict
-          "type" $typeF
-          "url" $urlF
-          "icon" (index (index $types $typeF) "icon")
-          "labelKey" (index (index $types $typeF) "label_i18n")
-          "contexts" (slice "list" "page")
-        ) }}
+	  "type" $typeF
+	  "url" $urlF
+	  "icon" (index (index $types $typeF) "icon")
+	  "labelKey" (index (index $types $typeF) "label_i18n")
+	  "contexts" (slice "list" "page")
+	) }}
     {{ end }}
   {{ end }}
 {{ end }}
@@ -246,12 +282,12 @@
     {{ if not ($seen.Get (printf "set.%s" $keyF)) }}
       {{ $seen.SetInMap "set" $keyF true }}
       {{ $links = $links | append (dict
-          "type" $typeF
-          "url" $urlF
-          "icon" (index (index $types $typeF) "icon")
-          "labelKey" (index (index $types $typeF) "label_i18n")
-          "contexts" (slice "list" "page")
-        ) }}
+	  "type" $typeF
+	  "url" $urlF
+	  "icon" (index (index $types $typeF) "icon")
+	  "labelKey" (index (index $types $typeF) "label_i18n")
+	  "contexts" (slice "list" "page")
+	) }}
     {{ end }}
   {{ end }}
 {{ end }}
