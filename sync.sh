@@ -10,7 +10,9 @@ cp $src/blox/resume-experience/block.html $dest/layouts/partials/hbx/blocks/resu
 
 cp $src/layouts/single.html $dest/layouts/
 cp -a $src/layouts/publication $dest/layouts/
+cp -a $src/layouts/landoc $dest/layouts/
 cp $src/layouts/_partials/publication_layout.html $dest/layouts/partials/
+cp $src/layouts/_partials/landoc_layout.html $dest/layouts/partials/
 cp $src/layouts/_partials/page_links.html $dest/layouts/partials/
 cp $src/layouts/_partials/site_footer.html $dest/layouts/partials/
 cp $src/layouts/_partials/views/card.html $dest/layouts/partials/views/
