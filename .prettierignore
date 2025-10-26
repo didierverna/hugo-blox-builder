@@ -1,14 +1,15 @@
+# Vendor directories
 _vendor/
 vendor/
-blox-bootstrapassets/css/libs/
 
+# Generated directories
 public/
 resources/
+node_modules/
 
-*.html
+# We use go-template parser for HTML, but still ignore some specific files
+modules/blox-tailwind/assets/dist/
 
-blox-bootstrapassets/css/reveal.css
-blox-bootstrapassets/scss/main.scss
-
-blox-bootstraplayouts/index.json
-blox-bootstraplayouts/index.webmanifest
+# JSON files with specific formats (although typically Biome now processes JSON)
+modules/blox-tailwind/layouts/index.json
+modules/blox-tailwind/layouts/index.webmanifest

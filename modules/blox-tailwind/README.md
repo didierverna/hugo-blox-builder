@@ -47,8 +47,8 @@ If you're upgrading from Tailwind v3:
 
 1. Install the new dependencies: `pnpm install`
 2. Remove any `assets/dist/wc.min.css` files
-3. Add the `package.json` file from the latest starter templates
-4. Update your deployment scripts to install it with `pnpm install` (refer to the latest `.github` folder in the starters)
+3. Add the `package.json` file from the latest templates
+4. Update your deployment scripts to install it with `pnpm install` (refer to the latest `.github` folder in the templates)
 5. The old `tailwind.config.js` and `postcss.config.js` files are no longer needed
 
 ## Development
@@ -65,3 +65,25 @@ hugo server --disableFastRender
 # Build for production
 hugo --minify
 ```
+
+## Vendor Libraries
+
+The module includes several third-party vendor libraries that are distributed with the module. These are copied from node_modules to the assets/dist/lib directory during the build process.
+
+To update the vendor libraries:
+
+```bash
+# Update vendor libraries to the latest versions and rebuild
+pnpm vendor:update-and-build
+
+# Just rebuild vendor libraries without updating versions
+pnpm vendor:libs
+```
+
+The following libraries are included:
+- mermaid (diagrams)
+- plotly.js (interactive charts)
+- katex (math rendering)
+- markmap-autoloader (mind maps)
+- alpinejs (interactivity)
+- preact (interactive components)

@@ -1,16 +1,20 @@
-'use strict';
-
 module.exports = {
   bracketSpacing: false,
-  singleQuote: true,
+  singleQuote: false,
   jsxBracketSameLine: true,
-  trailingComma: 'all',
-  printWidth: 120,
+  trailingComma: "all",
+  printWidth: 150,
   overrides: [
     {
-      files: ['*.html'],
+      files: ["*.html"],
       options: {
-        parser: 'go-template',
+        parser: "go-template",
+      },
+    },
+    {
+      files: ["*.md"],
+      options: {
+        proseWrap: "preserve",
       },
     },
   ],
