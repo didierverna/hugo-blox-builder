@@ -6,7 +6,6 @@
   - --hb-spacing-base: Base spacing unit
   - --hb-spacing-section: Section padding
   - --hb-font-size-base: Base font size
-  - --hb-font-size-scale: Modular scale ratio
 */
 
 /* Border radius utility - use instead of hardcoded rounded-* classes */

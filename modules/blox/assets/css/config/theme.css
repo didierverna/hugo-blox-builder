@@ -322,8 +322,27 @@
 
   /* Note: Providing these palettes in @theme ensures theme-pack mappings like var(--color-rose-600) always resolve */
 
-  /* Font family */
+  /* Font families */
   --font-family-sans: inter var, ui-sans-serif, system-ui, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol, noto color emoji;
+  --font-heading: var(--font-family-sans);
+  --font-body: var(--font-family-sans);
+  --font-code: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-nav: var(--font-heading);
+
+  /* Font weights */
+  --font-weight-heading: 700;
+  --font-weight-body: 400;
+  --hb-font-weight-body-bold: 600;
+
+  /* Line heights */
+  --font-leading-heading: 1.2;
+  --font-leading-body: 1.6;
+  --font-leading-code: 1.5;
+
+  /* Letter spacing */
+  --font-tracking-heading: -0.02em;
+  --font-tracking-body: 0;
+  --font-tracking-caps: 0.05em;
 
   /* Font sizes */
   --font-size-xs: 0.75rem;

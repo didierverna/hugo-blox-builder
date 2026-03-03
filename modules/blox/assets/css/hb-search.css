@@ -15,7 +15,7 @@
 .search-result mark {
   background-color: rgb(254 240 138);
   color: rgb(17 24 39);
-  font-weight: 600;
+  font-weight: var(--hb-font-weight-body-bold, 600);
   padding: 0.05rem 0.2rem;
   border-radius: 0.125rem;
 }

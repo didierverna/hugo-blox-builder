@@ -1,5 +1,6 @@
 /* Hugo Blox Framework Custom Classes */
 @layer components {
+
   /* Section styles for Hugo Blox blocks */
   .hbb-section {
     padding-top: 6rem;
@@ -8,7 +9,7 @@
 
   .section-subheading {
     font-size: 1.25rem;
-    font-weight: 700;
+    font-weight: var(--font-weight-heading, 700);
   }
 
   /* Home section background styles */

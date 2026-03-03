@@ -93,7 +93,7 @@
   
   {{ if $palette }}
     {{ range $shade, $value := $palette }}
-      /* Note: converting OKLCH to raw RGB CSS vars requires Tailwind 4's internal conversion 
+      {{/* Note: converting OKLCH to raw RGB CSS vars requires Tailwind 4's internal conversion 
          or we output the raw color value directly if theme.css supports it.
          
          The existing system expects --hb-primary-50-rgb to be a comma-less RGB triplet "255 255 255".
@@ -110,15 +110,15 @@
          
          Since we cannot easily calculate OKLCH -> RGB in Hugo templates, we should 
          OUTPUT THE HIGHER LEVEL VARIABLES directly here to override theme.css.
-      */
+      */}}
       --color-{{$name}}-{{$shade}}: {{ $value }};
     {{ end }}
     
-    /* Also set the legacy RGB vars to a fallback (500 shade) to prevent breakage 
-       in case something accesses the raw -rgb var directly, though unlikely */
+    {{/* Also set the legacy RGB vars to a fallback (500 shade) to prevent breakage 
+       in case something accesses the raw -rgb var directly, though unlikely */}}
     --hb-{{$name}}-500-rgb: 128 128 128; 
   {{ else }}
-    /* Unknown palette '{{$colorInput}}', falling back to Indigo-like default */
+    {{/* Unknown palette '{{$colorInput}}', falling back to Indigo-like default */}}
     {{ partial "functions/generate_color_scale" (dict "name" $name "color" "#6366f1") }}
   {{ end }}
 {{ end }}

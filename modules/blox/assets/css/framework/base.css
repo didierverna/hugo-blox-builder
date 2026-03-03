@@ -4,15 +4,40 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizelegibility;
+    /* Apply the runtime font vars injected by Hugo's typography partial */
+    font-family: var(--font-body);
   }
 
   body {
-    line-height: 1.5;
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-body, 400);
+    line-height: var(--font-leading-body, 1.6);
+    letter-spacing: var(--font-tracking-body, 0);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-heading, 700);
+    line-height: var(--font-leading-heading, 1.2);
+    letter-spacing: var(--font-tracking-heading, -0.02em);
+  }
+
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family: var(--font-code);
   }
 }
 
 /* Gradient Mesh Animations */
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0) translateX(0);
@@ -61,7 +86,7 @@
   .prose a {
     text-decoration: underline;
     text-decoration-color: var(--color-primary-300);
-    font-weight: 500;
+    font-weight: var(--hb-font-weight-body-bold, 600);
   }
 
   .prose a:hover {

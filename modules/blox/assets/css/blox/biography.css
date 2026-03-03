@@ -85,7 +85,7 @@
 .hb-ruby-name rt {
   /* Elegant, subdued annotation text */
   font-size: 0.45em;
-  font-weight: 500;
+  font-weight: var(--hb-font-weight-body-bold, 600);
   letter-spacing: 0.08em;
   line-height: 1.2;
 
@@ -125,7 +125,7 @@
 /* Latin-optimized variant - smaller annotation for romanization over CJK */
 .hb-ruby-name--latin rt {
   font-size: 0.4em;
-  font-weight: 500;
+  font-weight: var(--hb-font-weight-body-bold, 600);
   text-transform: none;
 }
 
