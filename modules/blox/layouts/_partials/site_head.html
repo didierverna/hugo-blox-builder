@@ -18,12 +18,13 @@
 {{ $superuser_role := "" }}
 
 {{/* Prefer is_owner flag, fallback to slug 'me' */}}
-{{ range $slug, $data := site.Data.authors }}
+{{ $authors := partialCached "functions/get_authors_data" . site.Language.Lang }}
+{{ range $slug, $data := $authors }}
   {{ if and (not $superuser_slug) ($data.is_owner) }}
     {{ $superuser_slug = $slug }}
   {{ end }}
 {{ end }}
-{{ if and (eq $superuser_slug "") (index site.Data.authors "me") }}
+{{ if and (eq $superuser_slug "") (index $authors "me") }}
   {{ $superuser_slug = "me" }}
 {{ end }}
 

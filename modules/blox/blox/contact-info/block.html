@@ -116,7 +116,8 @@
   {{ $author = strings.TrimSpace $author_raw }}
 {{ end }}
 {{ $profile := partial "functions/get_author_profile" $author }}
-{{ $author_data := index site.Data.authors (urlize $author) }}
+{{ $authors := partialCached "functions/get_authors_data" $page site.Language.Lang }}
+{{ $author_data := index $authors (urlize $author) }}
 {{ $email := "" }}
 {{ $email_raw := index $content "email" }}
 {{ if eq (printf "%T" $email_raw) "string" }}

@@ -38,7 +38,8 @@ Output (dict):
 
 {{- $slug = $slug | urlize -}}
 
-{{- $data := index site.Data.authors $slug -}}
+{{- $authors := partialCached "functions/get_authors_data" . site.Language.Lang -}}
+{{- $data := index $authors $slug -}}
 {{- $hasData := $data -}}
 
 {{/* Structured name resolution */}}
