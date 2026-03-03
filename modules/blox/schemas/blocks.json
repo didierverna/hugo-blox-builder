@@ -23,9 +23,7 @@
         },
         "type": {
           "type": "string",
-          "enum": [
-            "registry:block"
-          ]
+          "enum": ["registry:block"]
         },
         "title": {
           "type": "string"
@@ -53,11 +51,7 @@
                 },
                 "complexity": {
                   "type": "string",
-                  "enum": [
-                    "simple",
-                    "moderate",
-                    "complex"
-                  ]
+                  "enum": ["simple", "moderate", "complex"]
                 },
                 "preact": {
                   "type": "boolean"
@@ -71,13 +65,7 @@
           }
         }
       },
-      "required": [
-        "name",
-        "type",
-        "title",
-        "description",
-        "categories"
-      ]
+      "required": ["name", "type", "title", "description", "categories"]
     }
   },
   "version": "1.0.0",
@@ -87,18 +75,10 @@
       "type": "registry:block",
       "title": "Hero Section",
       "description": "Eye-catching landing section with a bold headline, supporting text, an optional announcement banner, and primary + secondary call-to-action buttons.",
-      "categories": [
-        "marketing",
-        "landing"
-      ],
+      "categories": ["marketing", "landing"],
       "meta": {
         "hugoblox": {
-          "capabilities": [
-            "headline",
-            "subtitle",
-            "dual-cta",
-            "announcement-banner"
-          ],
+          "capabilities": ["headline", "subtitle", "dual-cta", "announcement-banner"],
           "complexity": "simple",
           "preact": true,
           "schemaUrl": "https://api.hugoblox.com/v1/blocks/hero/schema"
@@ -110,17 +90,10 @@
       "type": "registry:block",
       "title": "Statistics",
       "description": "Showcase key metrics and achievements with animated counters that count up as visitors scroll into view.",
-      "categories": [
-        "social-proof",
-        "marketing"
-      ],
+      "categories": ["social-proof", "marketing"],
       "meta": {
         "hugoblox": {
-          "capabilities": [
-            "animated-counters",
-            "multiple-layouts",
-            "icons"
-          ],
+          "capabilities": ["animated-counters", "multiple-layouts", "icons"],
           "complexity": "moderate",
           "preact": true,
           "schemaUrl": "https://api.hugoblox.com/v1/blocks/stats/schema"
@@ -132,17 +105,10 @@
       "type": "registry:block",
       "title": "Features Grid",
       "description": "Highlight product or service capabilities in a clean grid layout, each with an icon, heading, and short description.",
-      "categories": [
-        "features",
-        "marketing"
-      ],
+      "categories": ["features", "marketing"],
       "meta": {
         "hugoblox": {
-          "capabilities": [
-            "icon-grid",
-            "section-header",
-            "responsive-columns"
-          ],
+          "capabilities": ["icon-grid", "section-header", "responsive-columns"],
           "complexity": "simple",
           "preact": true,
           "schemaUrl": "https://api.hugoblox.com/v1/blocks/features/schema"
@@ -154,17 +120,10 @@
       "type": "registry:block",
       "title": "Testimonials",
       "description": "Build trust with customer quotes displayed alongside their photo, name, and role.",
-      "categories": [
-        "social-proof",
-        "marketing"
-      ],
+      "categories": ["social-proof", "marketing"],
       "meta": {
         "hugoblox": {
-          "capabilities": [
-            "quote-cards",
-            "avatars",
-            "section-header"
-          ],
+          "capabilities": ["quote-cards", "avatars", "section-header"],
           "complexity": "simple",
           "preact": true,
           "schemaUrl": "https://api.hugoblox.com/v1/blocks/testimonials/schema"
@@ -176,19 +135,10 @@
       "type": "registry:block",
       "title": "CTA Image Paragraph",
       "description": "Tell your story with alternating image-and-text rows, each with a feature checklist and a call-to-action button.",
-      "categories": [
-        "cta",
-        "marketing",
-        "landing"
-      ],
+      "categories": ["cta", "marketing", "landing"],
       "meta": {
         "hugoblox": {
-          "capabilities": [
-            "alternating-layout",
-            "responsive-images",
-            "feature-list",
-            "cta-button"
-          ],
+          "capabilities": ["alternating-layout", "responsive-images", "feature-list", "cta-button"],
           "complexity": "moderate",
           "preact": true,
           "schemaUrl": "https://api.hugoblox.com/v1/blocks/cta-image-paragraph/schema"
@@ -200,18 +150,10 @@
       "type": "registry:block",
       "title": "CTA Card",
       "description": "Drive conversions with a bold, centered card featuring a headline, supporting text, and a prominent call-to-action button.",
-      "categories": [
-        "cta",
-        "marketing"
-      ],
+      "categories": ["cta", "marketing"],
       "meta": {
         "hugoblox": {
-          "capabilities": [
-            "glassmorphism",
-            "auto-text-color",
-            "gradient-background",
-            "cta-button"
-          ],
+          "capabilities": ["glassmorphism", "auto-text-color", "gradient-background", "cta-button"],
           "complexity": "moderate",
           "preact": true,
           "schemaUrl": "https://api.hugoblox.com/v1/blocks/cta-card/schema"
