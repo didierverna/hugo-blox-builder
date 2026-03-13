@@ -5,14 +5,14 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizelegibility;
     /* Apply the runtime font vars injected by Hugo's typography partial */
-    font-family: var(--font-body);
+    font-family: var(--hb-font-body);
   }
 
   body {
-    font-family: var(--font-body);
-    font-weight: var(--font-weight-body, 400);
-    line-height: var(--font-leading-body, 1.6);
-    letter-spacing: var(--font-tracking-body, 0);
+    font-family: var(--hb-font-body);
+    font-weight: var(--hb-font-weight-body, 400);
+    line-height: var(--hb-font-leading-body, 1.6);
+    letter-spacing: var(--hb-font-tracking-body, 0);
   }
 
   h1,
@@ -21,17 +21,17 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-heading);
-    font-weight: var(--font-weight-heading, 700);
-    line-height: var(--font-leading-heading, 1.2);
-    letter-spacing: var(--font-tracking-heading, -0.02em);
+    font-family: var(--hb-font-heading);
+    font-weight: var(--hb-font-weight-heading, 700);
+    line-height: var(--hb-font-leading-heading, 1.2);
+    letter-spacing: var(--hb-font-tracking-heading, -0.02em);
   }
 
   code,
   pre,
   kbd,
   samp {
-    font-family: var(--font-code);
+    font-family: var(--hb-font-code);
   }
 }
 

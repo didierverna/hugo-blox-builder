@@ -190,25 +190,25 @@
 <style>
   :root {
     /* Typography — Font Families */
-    --font-heading: {{ $heading_css | safeCSS }};
-    --font-body: {{ $body_css | safeCSS }};
-    --font-code: {{ $code_css | safeCSS }};
-    --font-nav: {{ $nav_css | safeCSS }};
+    --hb-font-heading: {{ $heading_css | safeCSS }};
+    --hb-font-body: {{ $body_css | safeCSS }};
+    --hb-font-code: {{ $code_css | safeCSS }};
+    --hb-font-nav: {{ $nav_css | safeCSS }};
 
     /* Typography — Font Weights */
-    --font-weight-heading: {{ $heading_weight }};
-    --font-weight-body: {{ $body_weight }};
+    --hb-font-weight-heading: {{ $heading_weight }};
+    --hb-font-weight-body: {{ $body_weight }};
     --hb-font-weight-body-bold: {{ $body_weight_bold }};
 
     /* Typography — Line Heights */
-    --font-leading-heading: {{ $leading.heading }};
-    --font-leading-body: {{ $leading.body }};
-    --font-leading-code: {{ $leading.code }};
+    --hb-font-leading-heading: {{ $leading.heading }};
+    --hb-font-leading-body: {{ $leading.body }};
+    --hb-font-leading-code: {{ $leading.code }};
 
     /* Typography — Letter Spacing */
-    --font-tracking-heading: {{ $tracking.heading | safeCSS }};
-    --font-tracking-body: {{ $tracking.body | safeCSS }};
-    --font-tracking-caps: {{ $tracking.caps | safeCSS }};
+    --hb-font-tracking-heading: {{ $tracking.heading | safeCSS }};
+    --hb-font-tracking-body: {{ $tracking.body | safeCSS }};
+    --hb-font-tracking-caps: {{ $tracking.caps | safeCSS }};
 
     /* Typography — Font Sizes */
     --hb-font-size-base: {{ $font_size_base | safeCSS }};
@@ -216,6 +216,6 @@
     --hb-font-size-lg: {{ $font_size_lg | safeCSS }};
 
     /* Typography — Font Family Alias (Tailwind v4 compat) */
-    --font-family-sans: {{ $body_css | safeCSS }};
+    --hb-font-family-sans: {{ $body_css | safeCSS }};
   }
 </style>

@@ -9,7 +9,7 @@
   <div class="flex w-full flex-wrap items-center justify-between px-3">
     <!-- Hamburger button for mobile view -->
     <button
-      class="block border-0 bg-transparent px-2 text-[var(--color-header-fg)] hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 lg:hidden"
+      class="block border-0 bg-transparent px-2 text-[var(--hb-color-header-fg)] hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 lg:hidden"
       type="button"
       data-te-collapse-init
       data-te-target="#collapse-main-navbar"
@@ -51,7 +51,7 @@
           class="my-4 pl-2 lg:my-0 lg:pl-2 lg:pr-1"
           data-te-nav-item-ref>
           <a
-            class="lg:px-2 text-[var(--color-header-fg)] hover:text-primary-500
+            class="lg:px-2 text-[var(--hb-color-header-fg)] hover:text-primary-500
             [&.active]:font-bold [&.active]:text-primary-500 {{ $activeClass }}"
             aria-current="page"
             href="{{ .URL | relLangURL }}"
@@ -63,7 +63,7 @@
         {{ if $show_search }}
         <li class="my-4 pl-2 lg:my-0 lg:pl-2 lg:pr-1">
           <a
-            class="lg:px-2 text-[var(--color-header-fg)] hover:text-primary-500
+            class="lg:px-2 text-[var(--hb-color-header-fg)] hover:text-primary-500
             [&.active]:font-bold [&.active]:text-primary-500"
             aria-current="page"
             href="#"
@@ -74,7 +74,7 @@
         {{ end }}
         {{ $show_mode_toggle := site.Params.hugoblox.header.theme_toggle | default true }}
         {{ if $show_mode_toggle }}
-        <li class="lg:px-2 text-[var(--color-header-fg)] hover:text-primary-500
+        <li class="lg:px-2 text-[var(--hb-color-header-fg)] hover:text-primary-500
             [&.active]:font-bold [&.active]:text-primary-500">
           <button class="theme-toggle mt-1" accesskey="t" title="">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -102,7 +102,7 @@
         {{/* Theme Picker */}}
         {{ if site.Params.hugoblox.header.theme_picker }}
         <li class="lg:px-2">
-          <select onchange="document.documentElement.setAttribute('data-theme-pack', this.value); localStorage.setItem('hb-theme-pack', this.value);" class="bg-transparent text-[var(--color-header-fg)] border-none focus:ring-0 cursor-pointer text-sm font-medium">
+          <select onchange="document.documentElement.setAttribute('data-theme-pack', this.value); localStorage.setItem('hb-theme-pack', this.value);" class="bg-transparent text-[var(--hb-color-header-fg)] border-none focus:ring-0 cursor-pointer text-sm font-medium">
             <option value="">Theme</option>
             {{ range $name, $data := site.Data.themes }}
               <option value="{{ $name }}">{{ $name | humanize }}</option>
@@ -125,7 +125,7 @@
 
         {{ $show_translations := site.Params.hugoblox.header.language_switcher | default true }}
         {{ if .IsTranslated | and $show_translations }}
-        <li class="lg:px-2 text-[var(--color-header-fg)] hover:text-primary-500
+        <li class="lg:px-2 text-[var(--hb-color-header-fg)] hover:text-primary-500
             [&.active]:font-bold [&.active]:text-primary-500">
           {{- partial "components/language-chooser.html" (dict "page" .) -}}
         </li>

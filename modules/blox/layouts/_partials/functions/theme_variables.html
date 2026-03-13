@@ -14,13 +14,13 @@
 {{ end }}
 
 {{/* 2. Semantic Surface Variables */}}
---color-background: {{ $data.surfaces.background | default "#ffffff" }};
---color-foreground: {{ $data.surfaces.foreground | default "#000000" }};
+--hb-color-background: {{ $data.surfaces.background | default "#ffffff" }};
+--hb-color-foreground: {{ $data.surfaces.foreground | default "#000000" }};
 
 {{/* Header */}}
---color-header-bg: {{ $data.surfaces.header.background | default $data.surfaces.background | default "#ffffff" }};
---color-header-fg: {{ $data.surfaces.header.foreground | default $data.surfaces.foreground | default "#000000" }};
+--hb-color-header-bg: {{ $data.surfaces.header.background | default $data.surfaces.background | default "#ffffff" }};
+--hb-color-header-fg: {{ $data.surfaces.header.foreground | default $data.surfaces.foreground | default "#000000" }};
 
 {{/* Footer */}}
---color-footer-bg: {{ $data.surfaces.footer.background | default $data.surfaces.background | default "#f3f4f6" }};
---color-footer-fg: {{ $data.surfaces.footer.foreground | default $data.surfaces.foreground | default "#000000" }};
+--hb-color-footer-bg: {{ $data.surfaces.footer.background | default $data.surfaces.background | default "#f3f4f6" }};
+--hb-color-footer-fg: {{ $data.surfaces.footer.foreground | default $data.surfaces.foreground | default "#000000" }};

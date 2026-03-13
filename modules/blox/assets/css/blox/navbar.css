@@ -6,7 +6,7 @@
 
 .navbar-brand {
   /* @apply text-black dark:text-white text-xl font-semibold; */
-  color: var(--color-header-fg);
+  color: var(--hb-color-header-fg);
   @apply text-xl font-semibold;
 }
 
@@ -42,8 +42,8 @@ input#nav-toggle:checked ~ #nav-menu {
 }
 
 #site-header.header {
-  background-color: var(--color-header-bg);
-  color: var(--color-header-fg);
+  background-color: var(--hb-color-header-bg);
+  color: var(--hb-color-header-fg);
   @apply py-3 shadow;
 }
 
@@ -55,7 +55,7 @@ input#nav-toggle:checked ~ #nav-menu {
 
 .nav-link {
   /* @apply dark:text-white block p-3 font-semibold transition lg:px-2 lg:py-3; */
-  color: var(--color-header-fg);
+  color: var(--hb-color-header-fg);
   @apply block p-3 font-semibold transition lg:px-2 lg:py-3;
 }
 
