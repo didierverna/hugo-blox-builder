@@ -20,11 +20,11 @@ export const Icon = ({svg, attributes}) => {
   let decoded = String(svg)
     .replace(/\\u003c/gi, "<")
     .replace(/\\u003e/gi, ">")
-    .replace(/\\u0026/gi, "&")
     .replace(/&lt;/gi, "<")
     .replace(/&gt;/gi, ">")
     .replace(/&quot;/gi, '"')
     .replace(/&#34;/gi, '"')
+    .replace(/\\u0026/gi, "&")
     .replace(/&amp;/gi, "&")
     .trim();
 
