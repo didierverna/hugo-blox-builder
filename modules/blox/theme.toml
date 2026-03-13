@@ -1,24 +1,26 @@
 name = "Hugo Blox - Tailwind"
 license = "MIT"
 licenselink = "https://github.com/HugoBlox/kit/blob/main/LICENSE.md"
-description = "Create any kind of website with fully customizable widgets - 50+ light/dark color themes, language packs, and widgets included."
+description = "Easily create a beautiful website your way with fully customizable blocks - build landing pages, marketing sites, blogs, portfolios, docs, and more. Used by Nvidia, Stanford, and 1000s of others."
 homepage = "https://github.com/HugoBlox/kit"
-demosite = "https://hugo-academic-pages.netlify.app/"
-tags = ["widgets",
-        "portfolio",
-        "responsive",
-        "company",
-        "blog",
+demosite = "https://hugoblox.com/templates/dev-portfolio/"
+tags = ["blog",
         "minimal",
+        "personal",
         "dark",
+        "light",
         "multilingual",
-        "landing page",
-        "one page",
-        "customizable"
+        "portfolio",
+        "landing",
+        "tailwind",
+        "popular",
+        "company",
+        "docs",
+        "saas"
         ]
 features = ["page builder", "widgets", "color themes", "dark mode", "customizable", "filterable portfolio",
             "blog", "create landing pages", "gallery", "contact form"]
 
 [author]
   name = "George Cushen"
-  homepage = "https://georgecushen.com"
+  homepage = "https://neuralgeo.com"

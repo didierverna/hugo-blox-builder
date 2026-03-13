@@ -95,18 +95,19 @@
 
       {{ $img_data := dict }}
       {{ if $image_resource }}
-        {{ if eq $block_type "cta-image-paragraph" }}
+        {{ $isSVG := eq $image_resource.MediaType.SubType "svg" }}
+        {{ $isGIF := eq $image_resource.MediaType.SubType "gif" }}
+        {{ if or $isSVG $isGIF }}
+          {{/* SVG/GIF: no processing, just pass through */}}
+          {{ $img_data = dict "src" $image_resource.RelPermalink }}
+        {{ else if eq $block_type "cta-image-paragraph" }}
           {{/* Responsive mode: generate srcset via process_responsive_image */}}
-          {{ if ne $image_resource.MediaType.SubType "gif" }}
-            {{ $responsive := partial "functions/process_responsive_image.html" (dict 
-                "image" $image_resource 
-                "mode" "fit"
-                "sizes" (slice 400 600 800 1200)
-            ) }}
-            {{ $img_data = dict "srcset" $responsive.srcset "src" $responsive.fallback.RelPermalink "width" $responsive.fallback.Width "height" $responsive.fallback.Height }}
-          {{ else }}
-            {{ $img_data = dict "src" $image_resource.RelPermalink "width" $image_resource.Width "height" $image_resource.Height }}
-          {{ end }}
+          {{ $responsive := partial "functions/process_responsive_image.html" (dict
+              "image" $image_resource
+              "mode" "fit"
+              "sizes" (slice 400 600 800 1200)
+          ) }}
+          {{ $img_data = dict "srcset" $responsive.srcset "src" $responsive.fallback.RelPermalink "width" $responsive.fallback.Width "height" $responsive.fallback.Height }}
         {{ else }}
           {{/* Thumbnail mode (testimonials, etc.): Fill 96x96 */}}
           {{ $processed := $image_resource.Process "Fill 96x96 Center webp" }}

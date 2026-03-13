@@ -138,8 +138,7 @@ Returns: Map with processed images and srcset string
   {{- end -}}
   {{ end }}
 {{- else -}}
-  {{/* Handle unsupported formats (SVG, GIF) */}}
-  {{- $srcset_parts = $srcset_parts | append (printf "%s %dw" $image.RelPermalink $image.Width) -}}
+  {{/* Handle unsupported formats (SVG, GIF) - skip srcset as width/height are unavailable for SVGs */}}
   {{- $fallback_image = $image -}}
   {{- $processed_images = $processed_images | append $image -}}
 {{- end -}}

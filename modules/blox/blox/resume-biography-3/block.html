@@ -131,10 +131,12 @@
         {{ $img = $image_resource }}
 
         {{ if $img }}
+          {{ $isSVG := eq $img.MediaType.SubType "svg" }}
+          {{ $isGIF := eq $img.MediaType.SubType "gif" }}
           <div class="relative w-full h-64 rounded-2xl overflow-hidden shadow-xl mb-8">
-            {{ if ne $img.MediaType.SubType "gif" }}
-              {{ $responsive := partial "functions/process_responsive_image.html" (dict 
-                  "image" $img 
+            {{ if not (or $isSVG $isGIF) }}
+              {{ $responsive := partial "functions/process_responsive_image.html" (dict
+                  "image" $img
                   "mode" "fill"
                   "aspect_ratio" "16:9"
                   "sizes" (slice 768 1024 1366 1920 2560)
@@ -145,7 +147,7 @@
                     src="{{ $responsive.fallback.RelPermalink }}"
                     alt="" />
             {{ else }}
-              {{- $img = $img.Process "webp" -}}
+              {{ if not $isSVG }}{{ $img = $img.Process "webp" }}{{ end }}
               <img class="absolute inset-0 w-full h-full object-cover"
                     src="{{$img.RelPermalink}}"
                     alt="" />

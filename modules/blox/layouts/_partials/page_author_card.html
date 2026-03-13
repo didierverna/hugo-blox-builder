@@ -14,14 +14,24 @@
 
 <div class="flex pt-12 pb-4">
   {{ if $avatar }}
-    {{ $responsive := partial "functions/process_responsive_image.html" (dict 
-        "image" $avatar 
+    {{ $isSVG := eq $avatar.MediaType.SubType "svg" }}
+    {{ if $isSVG }}
+    <img
+      class="mr-4 h-24 w-24 {{if ne $avatar_shape "square"}}rounded-full{{end}}"
+      src="{{ $avatar.RelPermalink }}"
+      width="96"
+      height="96"
+      alt="{{$profile.title}}"
+      loading="lazy"
+      />
+    {{ else }}
+    {{ $responsive := partial "functions/process_responsive_image.html" (dict
+        "image" $avatar
         "mode" "fill"
         "aspect_ratio" "1:1"
         "anchor" "Center"
         "sizes" (slice 96 192 288 384)
     ) }}
-    
     <img
       class="mr-4 h-24 w-24 {{if ne $avatar_shape "square"}}rounded-full{{end}}"
       srcset="{{ $responsive.srcset }}"
@@ -32,6 +42,7 @@
       alt="{{$profile.title}}"
       loading="lazy"
       />
+    {{ end }}
   {{ end }}
   <div class="place-self-center">
     <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">

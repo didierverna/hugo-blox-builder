@@ -103,9 +103,11 @@
   {{ $img = $image_resource }}
   
   {{ if $img }}
-    {{ if ne $img.MediaType.SubType "gif" }}
-      {{ $responsive := partial "functions/process_responsive_image.html" (dict 
-          "image" $img 
+    {{ $isSVG := eq $img.MediaType.SubType "svg" }}
+    {{ $isGIF := eq $img.MediaType.SubType "gif" }}
+    {{ if not (or $isSVG $isGIF) }}
+      {{ $responsive := partial "functions/process_responsive_image.html" (dict
+          "image" $img
           "mode" "fill"
           "aspect_ratio" "16:9"
           "sizes" (slice 768 1024 1366 1920 2560)
@@ -124,14 +126,13 @@
         </div>
       </div>
     {{ else }}
-      {{/* Handle GIF without processing */}}
-      {{- $img = $img.Process "webp" -}}
+      {{/* Handle SVG/GIF without processing */}}
+      {{ if not $isSVG }}{{ $img = $img.Process "webp" }}{{ end }}
       <div class="w-full bg-gray-200 dark:bg-gray-900 flex flex-wrap items-center justify-center">
         <div class="w-full bg-white rounded dark:bg-gray-800">
           <div class="h-2/4 sm:h-64 overflow-hidden w-full">
             <img class="w-full object-cover"
                  src="{{$img.RelPermalink}}"
-                 width="{{$img.Width}}" height="{{$img.Height}}"
                  alt="" />
           </div>
         </div>
