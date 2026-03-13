@@ -1,13 +1,18 @@
 {{/*
   HugoBlox Theme Engine: Typography Rendering
 
-  Resolves font families, emits Google Fonts <link> tags,
-  and generates CSS custom properties for typography.
+  Resolves font families, emits @font-face for bundled fonts,
+  Google Fonts <link> tags for remote fonts, and CSS custom properties.
+
+  Font resolution order (per family):
+    1. system-sans / system-serif / system-mono → native OS font stack
+    2. Bundled file in assets/dist/font/<Name>* → local @font-face
+    3. Fallback → Google Fonts CDN <link>
 
   Input: Theme config dict from get_theme_config:
-    - typography: { families, weights, sizes, leading, tracking }
+    - typography: { families, weights, sizes, leading, tracking, variable }
 
-  Output: <link> (Google Fonts) + <style> (CSS custom properties)
+  Output: @font-face (bundled) + <link> (Google Fonts) + <style> (CSS custom properties)
 */}}
 
 {{ $typo := .typography }}
@@ -24,7 +29,7 @@
 {{ $system_serif := "ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif" }}
 {{ $system_mono := "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" }}
 
-{{/* Map font names to CSS values and collect Google Font families */}}
+{{/* Map font names to CSS values and collect Google Font / bundled font families */}}
 {{ $resolve_family := dict }}
 {{ $roles := slice "heading" "body" "code" "nav" }}
 {{ range $role := $roles }}
@@ -34,6 +39,7 @@
   {{ end }}
   {{ $css := "" }}
   {{ $is_google := false }}
+  {{ $bundled_res := false }}
   {{ if eq $name "system-sans" }}
     {{ $css = $system_sans }}
   {{ else if eq $name "system-serif" }}
@@ -41,7 +47,10 @@
   {{ else if eq $name "system-mono" }}
     {{ $css = $system_mono }}
   {{ else }}
-    {{/* Google Font — pick the right generic fallback based on pack style and role */}}
+    {{/* Check for a locally bundled font file in assets/dist/font/ */}}
+    {{ $normalized := replace $name " " "" }}
+    {{ $bundled_res = resources.GetMatch (printf "dist/font/%s*" $normalized) }}
+    {{/* Build CSS font-family value with appropriate generic fallback */}}
     {{ if eq $role "code" }}
       {{ $css = printf "'%s', %s" $name $system_mono }}
     {{ else if eq $pack_style "serif" }}
@@ -49,9 +58,74 @@
     {{ else }}
       {{ $css = printf "'%s', %s" $name $system_sans }}
     {{ end }}
-    {{ $is_google = true }}
+    {{/* Only request from Google Fonts if no local bundle exists */}}
+    {{ if not $bundled_res }}
+      {{ $is_google = true }}
+    {{ end }}
   {{ end }}
-  {{ $resolve_family = merge $resolve_family (dict $role (dict "css" $css "google" $is_google "name" $name)) }}
+  {{ $resolve_family = merge $resolve_family (dict $role (dict "css" $css "google" $is_google "name" $name "bundled" $bundled_res)) }}
+{{ end }}
+
+{{/* Emit @font-face declarations for locally bundled fonts */}}
+{{ $bundled_seen := dict }}
+{{ range $role := $roles }}
+  {{ with index $resolve_family $role }}
+    {{ if .bundled }}
+      {{ $name := .name }}
+      {{ if not (index $bundled_seen $name) }}
+        {{ $bundled_seen = merge $bundled_seen (dict $name true) }}
+        {{ $res := .bundled }}
+        {{/* Publish the font file so Hugo copies it to the output directory */}}
+        {{ $res.Publish }}
+        {{/* Determine the CSS font format from the file extension */}}
+        {{ $ext := path.Ext $res.Name }}
+        {{ $format := "" }}
+        {{ if eq $ext ".woff2" }}
+          {{ $format = "woff2" }}
+        {{ else if eq $ext ".ttf" }}
+          {{ $format = "truetype" }}
+        {{ else if eq $ext ".woff" }}
+          {{ $format = "woff" }}
+        {{ else }}
+          {{ warnf "TYPOGRAPHY: Bundled font '%s' has unrecognized extension '%s'. Expected .woff2 or .ttf." $name $ext }}
+        {{ end }}
+        {{/* Determine weight range: variable font files get full range, static get discrete weights.
+             Detect variable fonts from the ".var." convention in the filename (e.g. Inter.var.woff2),
+             which is more reliable than the pack's variable flag (used for Google Fonts URL construction). */}}
+        {{ $is_var_file := strings.Contains $res.Name ".var." }}
+        {{ $weight_val := "400" }}
+        {{ if $is_var_file }}
+          {{ $weight_val = "100 900" }}
+        {{ else }}
+          {{/* Collect all discrete weights across roles using this font */}}
+          {{ $all_weights := slice }}
+          {{ range $r := $roles }}
+            {{ $entry := index $resolve_family $r }}
+            {{ if and $entry (eq (index $entry "name") $name) }}
+              {{ with index $weights $r }}
+                {{ range $w := . }}
+                  {{ $all_weights = $all_weights | append $w }}
+                {{ end }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+          {{ if gt (len $all_weights) 0 }}
+            {{ $weight_val = delimit ($all_weights | uniq | sort) " " }}
+          {{ end }}
+        {{ end }}
+        {{ if $format }}
+<style>
+  @font-face {
+    font-family: '{{ $name }}';
+    src: local('{{ $name }}'), url('{{ $res.RelPermalink }}') format('{{ $format }}');
+    font-weight: {{ $weight_val }};
+    font-display: swap;
+  }
+</style>
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
 {{ end }}
 
 {{/* Build Google Fonts URL */}}
